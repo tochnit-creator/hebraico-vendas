@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hebraico Bíblico — Prof. Gabriel Barbosa</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070a;
+  --bg2:#0e0e12;
+  --card:#141418;
+  --card2:#1a1a20;
+  --border:#252530;
+  --gold:#c9a84c;
+  --gold2:#e8cc7a;
+  --gold3:#f5e0a0;
+  --gold-dim:rgba(201,168,76,0.12);
+  --text:#f0ece3;
+  --muted:#888899;
+  --faint:#333340;
+  --teal:#45c4a0;
+  --rose:#e07a7a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--faint);border-radius:2px;}
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.5;}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 100px;position:relative;overflow:hidden;}
+.hero-glow{position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%,rgba(201,168,76,0.18) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 15% 100%,rgba(69,196,160,0.07) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 30% at 85% 80%,rgba(201,168,76,0.06) 0%,transparent 50%);}
+.hero-lines{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.hero-lines::before,.hero-lines::after{content:'';position:absolute;width:1px;height:100%;background:linear-gradient(180deg,transparent,rgba(201,168,76,0.15) 40%,transparent);}
+.hero-lines::before{left:15%;}.hero-lines::after{right:15%;}
+
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.28);border-radius:999px;padding:6px 20px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:40px;animation:fadeUp 0.8s ease both;}
+.hero-badge::before{content:'✦';}
+
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(14px,2.5vw,20px);font-weight:300;color:var(--muted);letter-spacing:6px;text-transform:uppercase;margin-bottom:16px;animation:fadeUp 0.8s 0.1s ease both;}
+
+.hero-hebrew{font-family:'Cormorant Garamond',serif;font-size:clamp(100px,22vw,220px);font-weight:700;line-height:0.85;color:transparent;background:linear-gradient(155deg,#a07828 0%,var(--gold) 30%,var(--gold2) 55%,var(--gold3) 70%,var(--gold) 100%);-webkit-background-clip:text;background-clip:text;animation:fadeUp 0.8s 0.15s ease both;letter-spacing:-8px;display:block;}
+
+.hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,54px);font-weight:400;color:var(--text);margin-top:20px;line-height:1.2;animation:fadeUp 0.8s 0.25s ease both;}
+.hero-subtitle em{color:var(--gold);font-style:italic;}
+
+.hero-prof{margin-top:32px;display:flex;align-items:center;justify-content:center;gap:14px;animation:fadeUp 0.8s 0.35s ease both;}
+.prof-av{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#6a4a08);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:#1a1000;border:2px solid rgba(201,168,76,0.5);}
+.prof-n{font-size:16px;font-weight:600;color:var(--text);text-align:left;}
+.prof-r{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+
+.hero-desc{font-size:17px;color:var(--muted);max-width:560px;line-height:1.9;margin-top:28px;animation:fadeUp 0.8s 0.45s ease both;}
+
+.hero-cta{margin-top:48px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;animation:fadeUp 0.8s 0.55s ease both;}
+.btn-cta{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a1000;border:none;border-radius:12px;padding:18px 44px;font-size:16px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.25s;letter-spacing:0.3px;text-decoration:none;display:inline-block;}
+.btn-cta:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(201,168,76,0.4);}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border);border-radius:12px;padding:18px 36px;font-size:15px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+
+.hero-trust{margin-top:48px;display:flex;gap:32px;flex-wrap:wrap;justify-content:center;animation:fadeUp 0.8s 0.65s ease both;}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);}
+.trust-item::before{content:'✓';color:var(--teal);font-weight:700;}
+
+/* ── DIVIDER ── */
+.divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);}
+.divider-gold{background:linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent);}
+
+/* ── SECTION ── */
+section{max-width:1000px;margin:0 auto;padding:90px 24px;}
+.sec-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,52px);font-weight:700;line-height:1.1;margin-bottom:16px;}
+.sec-sub{font-size:16px;color:var(--muted);line-height:1.8;max-width:600px;margin-bottom:52px;}
+
+/* ── PROBLEMA / DOR ── */
+.dor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.dor-item{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;display:flex;gap:16px;align-items:flex-start;transition:border-color 0.2s;}
+.dor-item:hover{border-color:rgba(201,168,76,0.3);}
+.dor-icon{font-size:28px;flex-shrink:0;margin-top:2px;}
+.dor-t{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.dor-p{font-size:13px;color:var(--muted);line-height:1.7;}
+
+/* ── PARA QUEM ── */
+.paraquem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+.pq-card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 14px 14px 0;padding:20px 22px;transition:all 0.2s;}
+.pq-card:hover{background:rgba(201,168,76,0.05);border-color:var(--gold);}
+.pq-icon{font-size:26px;margin-bottom:10px;}
+.pq-t{font-size:14px;font-weight:600;color:var(--text);}
+.pq-p{font-size:13px;color:var(--muted);margin-top:4px;line-height:1.6;}
+
+/* ── MÓDULOS ── */
+.modulos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;}
+.mod-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 24px;display:flex;gap:18px;align-items:flex-start;transition:all 0.2s;cursor:default;}
+.mod-card:hover{border-color:rgba(201,168,76,0.4);transform:translateY(-2px);}
+.mod-num{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--gold);font-weight:700;line-height:1;flex-shrink:0;width:36px;}
+.mod-body{}
+.mod-t{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.mod-p{font-size:12px;color:var(--muted);line-height:1.6;}
+.mod-badge{display:inline-block;margin-top:6px;font-size:10px;padding:2px 8px;border-radius:999px;background:rgba(201,168,76,0.1);color:var(--gold);border:1px solid rgba(201,168,76,0.25);}
+
+/* ── PREVIEW INTERATIVO ── */
+.preview-box{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;position:relative;}
+.preview-bar{background:var(--card2);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:8px;}
+.preview-dot{width:10px;height:10px;border-radius:50%;}
+.preview-url{flex:1;background:var(--faint);border-radius:6px;padding:5px 14px;font-size:12px;color:var(--muted);margin:0 12px;}
+.preview-inner{padding:32px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;}
+.preview-heb{font-family:'Cormorant Garamond',serif;font-size:80px;color:var(--gold);direction:rtl;line-height:1;}
+.preview-modules{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:8px;}
+.preview-mod{background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:6px 12px;font-size:11px;color:var(--gold);}
+.preview-link{font-size:12px;color:var(--blue,#6590e8);margin-top:8px;font-style:italic;}
+
+/* ── SOBRE O PROFESSOR ── */
+.prof-section{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:start;}
+@media(max-width:640px){.prof-section{grid-template-columns:1fr;}}
+.prof-avatar-lg{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#6a4a08);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:700;color:#1a1000;border:3px solid rgba(201,168,76,0.5);flex-shrink:0;}
+.prof-name-lg{font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--text);margin-bottom:6px;}
+.prof-role-lg{font-size:12px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:18px;}
+.prof-bio{font-size:15px;color:var(--muted);line-height:1.9;}
+.prof-stats{display:flex;gap:28px;flex-wrap:wrap;margin-top:24px;}
+.prof-stat{text-align:center;}
+.prof-stat-n{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--gold);font-weight:700;}
+.prof-stat-l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+
+/* ── O QUE VOCÊ VAI APRENDER ── */
+.aprender-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;}
+.ap-item{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;background:var(--card);border:1px solid var(--border);border-radius:12px;transition:border-color 0.2s;}
+.ap-item:hover{border-color:rgba(69,196,160,0.4);}
+.ap-check{width:22px;height:22px;border-radius:50%;background:rgba(69,196,160,0.15);border:1px solid rgba(69,196,160,0.4);color:var(--teal);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:1px;}
+.ap-text{font-size:14px;color:var(--text);line-height:1.6;}
+
+/* ── DEPOIMENTOS ── */
+.dep-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;}
+.dep-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px;position:relative;transition:border-color 0.2s;}
+.dep-card:hover{border-color:rgba(201,168,76,0.35);}
+.dep-quote{font-size:48px;color:var(--gold);font-family:'Cormorant Garamond',serif;line-height:0.8;margin-bottom:12px;opacity:0.5;}
+.dep-text{font-size:14px;color:var(--muted);line-height:1.8;font-style:italic;margin-bottom:18px;}
+.dep-author{display:flex;align-items:center;gap:12px;}
+.dep-av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--faint),var(--card2));display:flex;align-items:center;justify-content:center;font-size:14px;}
+.dep-name{font-size:13px;font-weight:600;color:var(--text);}
+.dep-loc{font-size:11px;color:var(--muted);}
+.dep-stars{color:var(--gold);font-size:12px;margin-bottom:4px;}
+
+/* ── PREÇO ── */
+.preco-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:800px;margin:0 auto;}
+.preco-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px;text-align:center;transition:all 0.2s;position:relative;}
+.preco-card.destaque{border-color:var(--gold);background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(201,168,76,0.03));}
+.preco-badge-top{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a1000;font-size:11px;font-weight:700;padding:4px 16px;border-radius:999px;letter-spacing:1px;white-space:nowrap;}
+.preco-nome{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+.preco-valor{font-family:'Cormorant Garamond',serif;font-size:64px;color:var(--gold);font-weight:700;line-height:1;}
+.preco-periodo{font-size:13px;color:var(--muted);margin-top:4px;}
+.preco-lista{list-style:none;margin:24px 0;display:flex;flex-direction:column;gap:10px;text-align:left;}
+.preco-lista li{font-size:13px;color:var(--muted);display:flex;gap:10px;align-items:flex-start;}
+.preco-lista li::before{content:'✓';color:var(--teal);font-weight:700;flex-shrink:0;}
+.preco-lista li.no::before{content:'✗';color:var(--rose);}
+.preco-lista li.no{opacity:0.5;}
+
+/* ── FAQ ── */
+.faq-list{display:flex;flex-direction:column;gap:10px;}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color 0.2s;}
+.faq-item.open{border-color:rgba(201,168,76,0.35);}
+.faq-q{padding:20px 24px;font-size:15px;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;user-select:none;}
+.faq-arrow{color:var(--gold);font-size:18px;transition:transform 0.25s;flex-shrink:0;}
+.faq-item.open .faq-arrow{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.3s ease;padding:0 24px;font-size:14px;color:var(--muted);line-height:1.8;}
+.faq-item.open .faq-a{max-height:300px;padding:0 24px 20px;}
+
+/* ── CTA FINAL ── */
+.cta-final{background:linear-gradient(135deg,rgba(201,168,76,0.1),rgba(69,196,160,0.06));border:1px solid rgba(201,168,76,0.25);border-radius:24px;padding:72px 40px;text-align:center;position:relative;overflow:hidden;}
+.cta-final::before{content:'עברית';font-family:'Cormorant Garamond',serif;font-size:300px;color:rgba(201,168,76,0.04);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;white-space:nowrap;}
+.cta-final-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,54px);font-weight:700;margin-bottom:16px;position:relative;}
+.cta-final-sub{font-size:16px;color:var(--muted);max-width:500px;margin:0 auto 40px;line-height:1.8;position:relative;}
+.cta-guarantee{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:24px;font-size:13px;color:var(--muted);}
+.cta-guarantee span{color:var(--teal);}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:48px 24px;text-align:center;color:var(--muted);font-size:13px;}
+footer strong{color:var(--gold);}
+
+/* ── STICKY CTA MOBILE ── */
+.sticky-cta{position:fixed;bottom:0;left:0;right:0;background:rgba(7,7,10,0.95);backdrop-filter:blur(16px);border-top:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:100;transform:translateY(100%);transition:transform 0.3s ease;}
+.sticky-cta.show{transform:translateY(0);}
+.sticky-price{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold);font-weight:700;}
+.sticky-label{font-size:11px;color:var(--muted);}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:0.1s;}
+.reveal-delay-2{transition-delay:0.2s;}
+.reveal-delay-3{transition-delay:0.3s;}
+
+@media(max-width:600px){
+  .hero-cta{flex-direction:column;align-items:center;}
+  .btn-cta,.btn-ghost{width:100%;text-align:center;}
+  .preco-wrap{grid-template-columns:1fr;}
+  section{padding:60px 20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════
+     HERO
+═══════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-lines"></div>
+
+  <div class="hero-badge">Curso Online · Ao Vivo no seu Ritmo</div>
+
+  <div class="hero-title">Aprenda a Língua Sagrada das Escrituras</div>
+  <span class="hero-hebrew">עברית</span>
+
+  <h1 class="hero-subtitle">Hebraico Bíblico<br><em>do Zero à Exegese</em></h1>
+
+  <div class="hero-prof">
+    <div class="prof-av">G</div>
+    <div>
+      <div class="prof-n">Prof. Gabriel Barbosa</div>
+      <div class="prof-r">Instructor de Hebraico Bíblico</div>
+    </div>
+  </div>
+
+  <p class="hero-desc">
+    O único curso em português que leva você do alfabeto hebraico à análise profunda dos textos bíblicos originais — com 29 módulos interativos, exegese palavra por palavra e método progressivo.
+  </p>
+
+  <div class="hero-cta">
+    <a href="https://gabrielpeckssss.github.io/hebraico/" target="_blank" class="btn-cta">
+      ✦ Acessar o Curso Agora
+    </a>
+    <a href="#modulos" class="btn-ghost">Ver os módulos</a>
+  </div>
+
+  <div class="hero-trust">
+    <div class="trust-item">29 Módulos completos</div>
+    <div class="trust-item">Interativo e prático</div>
+    <div class="trust-item">Texto Massorético original</div>
+    <div class="trust-item">Acesso vitalício</div>
+  </div>
+</div>
+
+<div class="divider divider-gold"></div>
+
+<!-- ═══════════════════════════════════
+     PROBLEMA
+═══════════════════════════════════ -->
+<section>
+  <div class="sec-eyebrow reveal">O desafio</div>
+  <h2 class="sec-title reveal">Você já sentiu isso ao ler a Bíblia?</h2>
+  <div class="dor-grid">
+    <div class="dor-item reveal reveal-delay-1">
+      <div class="dor-icon">😕</div>
+      <div>
+        <div class="dor-t">"A tradução não captura tudo..."</div>
+        <div class="dor-p">Você percebe que algo se perde entre o hebraico original e o português — mas não sabe exatamente o quê.</div>
+      </div>
+    </div>
+    <div class="dor-item reveal reveal-delay-2">
+      <div class="dor-icon">📚</div>
+      <div>
+        <div class="dor-t">"Os livros são complicados demais"</div>
+        <div class="dor-p">Gramáticas acadêmicas parecem inacessíveis, cheias de jargão, e você não sabe por onde começar.</div>
+      </div>
+    </div>
+    <div class="dor-item reveal reveal-delay-3">
+      <div class="dor-icon">🔤</div>
+      <div>
+        <div class="dor-t">"Aquelas letras parecem um código"</div>
+        <div class="dor-p">O alfabeto hebraico parece impossível — escrito da direita para esquerda, sem vogais visíveis...</div>
+      </div>
+    </div>
+    <div class="dor-item reveal">
+      <div class="dor-icon">🙏</div>
+      <div>
+        <div class="dor-t">"Quero ir mais fundo nas Escrituras"</div>
+        <div class="dor-p">Você quer mais do que devocionais — quer entender o que Deus disse, nas palavras que Ele escolheu.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════
+     PARA QUEM
+═══════════════════════════════════ -->
+<section>
+  <div class="sec-eyebrow reveal">Este curso é para você se...</div>
+  <h2 class="sec-title reveal">Para quem é este curso</h2>
+  <div class="paraquem-grid">
+    <div class="pq-card reveal reveal-delay-1">
+      <div class="pq-icon">🕍</div>
+      <div class="pq-t">Pastores e líderes</div>
+      <div class="pq-p">Que querem pregar com mais profundidade e autoridade diretamente do texto original.</div>
+    </div>
+    <div class="pq-card reveal reveal-delay-2">
+      <div class="pq-icon">🎓</div>
+      <div class="pq-t">Estudantes de teologia</div>
+      <div class="pq-p">Que precisam de uma base sólida de hebraico antes de entrar nas aulas acadêmicas.</div>
+    </div>
+    <div class="pq-card reveal reveal-delay-3">
+      <div class="pq-icon">📖</div>
+      <div class="pq-t">Leigos apaixonados</div>
+      <div class="pq-p">Que amam a Palavra e querem ir além das traduções para encontrar os tesouros escondidos no original.</div>
+    </div>
+    <div class="pq-card reveal">
+      <div class="pq-icon">✍️</div>
+      <div class="pq-t">Escritores e professores</div>
+      <div class="pq-p">Que produzem conteúdo bíblico e querem fundamentar seu ensino na língua original.</div>
+    </div>
+    <div class="pq-card reveal reveal-delay-1">
+      <div class="pq-icon">🌿</div>
+      <div class="pq-t">Curiosos espirituais</div>
+      <div class="pq-p">Que simplesmente querem entender de onde vêm palavras como "Shalom", "Elohim" e "Bereshit".</div>
+    </div>
+    <div class="pq-card reveal reveal-delay-2">
+      <div class="pq-icon">🔬</div>
+      <div class="pq-t">Exegetas iniciantes</div>
+      <div class="pq-p">Que querem aprender a fazer análise textual rigorosa com as ferramentas certas.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════
+     MÓDULOS
+═══════════════════════════════════ -->
+<section id="modulos">
+  <div class="sec-eyebrow reveal">Conteúdo do curso</div>
+  <h2 class="sec-title reveal">29 Módulos do Zero ao Avançado</h2>
+  <p class="sec-sub reveal">Uma jornada progressiva, do primeiro contato com o alfabeto até a exegese de textos bíblicos originais.</p>
+  <div class="modulos-grid" id="modulosGrid"></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════
+     PREVIEW DO CURSO
+═══════════════════════════════════ -->
+<section>
+  <div class="sec-eyebrow reveal">Veja por dentro</div>
+  <h2 class="sec-title reveal">Totalmente interativo e moderno</h2>
+  <p class="sec-sub reveal">O curso foi construído como uma experiência digital — não são PDFs ou vídeos estáticos. Você interage com o conteúdo em tempo real.</p>
+  <div class="preview-box reveal">
+    <div class="preview-bar">
+      <div class="preview-dot" style="background:#ff5f57;"></div>
+      <div class="preview-dot" style="background:#febc2e;"></div>
+      <div class="preview-dot" style="background:#28c840;"></div>
+      <div class="preview-url">gabrielpeckssss.github.io/hebraico/</div>
+    </div>
+    <div class="preview-inner">
+      <div class="preview-heb">עברית</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--muted);">Hebraico Bíblico · Prof. Gabriel Barbosa</div>
+      <div class="preview-modules">
+        <span class="preview-mod">א Alfabeto</span>
+        <span class="preview-mod">הַ Artigos</span>
+        <span class="preview-mod">שׁרשׁ Raiz Trilíteral</span>
+        <span class="preview-mod">7 Binyanim</span>
+        <span class="preview-mod">Vav Consecutivo</span>
+        <span class="preview-mod">📖 Exegese</span>
+        <span class="preview-mod">🎯 Quiz Interativo</span>
+        <span class="preview-mod">🔍 Glossário de 50 palavras</span>
+        <span class="preview-mod">📜 Manuscritos</span>
+        <span class="preview-mod">🏆 Conquistas XP</span>
+      </div>
+      <a href="https://gabrielpeckssss.github.io/hebraico/" target="_blank" style="color:var(--gold);font-size:13px;margin-top:8px;text-decoration:none;">→ Acessar o curso completo</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════
+     O QUE VOCÊ VAI APRENDER
+═══════════════════════════════════ -->
+<section>
+  <div class="sec-eyebrow reveal">Resultados</div>
+  <h2 class="sec-title reveal">O que você vai dominar</h2>
+  <div class="aprender-grid" id="aprenderGrid"></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════
+     SOBRE O PROFESSOR
+═══════════════════════════════════ -->
+<section>
+  <div class="sec-eyebrow reveal">Seu instrutor</div>
+  <div class="prof-section reveal">
+    <div class="prof-avatar-lg">G</div>
+    <div>
+      <h2 class="prof-name-lg">Prof. Gabriel Barbosa</h2>
+      <div class="prof-role-lg">Instructor de Hebraico Bíblico</div>
+      <p class="prof-bio">
+        Gabriel Barbosa é instructor de Hebraico Bíblico com profunda paixão pela língua das Escrituras e por tornar o estudo do texto original acessível a todos. Seu método une rigor acadêmico com didática clara e acessível — fazendo com que conceitos complexos como binyanim, nikud e exegese se tornem compreensíveis para qualquer pessoa comprometida com o estudo sério da Palavra.
+        <br><br>
+        Neste curso, Gabriel conduziu cada módulo com cuidado para que estudantes de todos os níveis possam avançar com segurança, do alfabeto ao texto massorético original.
+      </p>
+      <div class="prof-stats">
+        <div class="prof-stat">
+          <div class="prof-stat-n">29</div>
+          <div class="prof-stat-l">Módulos</div>
+        </div>
+        <div class="prof-stat">
+          <div class="prof-stat-n">3.000+</div>
+          <div class="prof-stat-l">Anos de história</div>
+        </div>
+        <div class="prof-stat">
+          <div class="prof-stat-n">50+</div>
+          <div class="prof-stat-l">Palavras bíblicas</div>
+        </div>
+        <div class="prof-stat">
+          <div class="prof-stat-n">100%</div>
+          <div class="prof-stat-l">Interativo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════
+     DEPOIMENTOS
+═══════════════════════════════════ -->
+<section>
+  <div class="sec-eyebrow reveal">Depoimentos</div>
+  <h2 class="sec-title reveal">O que os alunos dizem</h2>
+  <div class="dep-grid" id="depGrid"></div>
+</section>
+
+<div class="divider divider-gold"></div>
+
+<!-- ═══════════════════════════════════
+     PREÇO
+═══════════════════════════════════ -->
+<section id="preco">
+  <div class="sec-eyebrow reveal" style="text-align:center;">Investimento</div>
+  <h2 class="sec-title reveal" style="text-align:center;">Escolha seu acesso</h2>
+  <p class="sec-sub reveal" style="text-align:center;margin:0 auto 48px;">Comece hoje. Acesso imediato ao curso completo.</p>
+  <div class="preco-wrap" id="precoWrap"></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════
+     FAQ
+═══════════════════════════════════ -->
+<section>
+  <div class="sec-eyebrow reveal">Dúvidas frequentes</div>
+  <h2 class="sec-title reveal">Perguntas frequentes</h2>
+  <div class="faq-list reveal" id="faqList"></div>
+</section>
+
+<div class="divider divider-gold"></div>
+
+<!-- ═══════════════════════════════════
+     CTA FINAL
+═══════════════════════════════════ -->
+<section>
+  <div class="cta-final reveal">
+    <div class="sec-eyebrow" style="margin-bottom:16px;">Comece agora</div>
+    <h2 class="cta-final-title">Pronto para ler a Bíblia<br>no original?</h2>
+    <p class="cta-final-sub">Junte-se a centenas de alunos que já estão descobrindo as riquezas escondidas no texto hebraico original das Escrituras.</p>
+    <a href="https://gabrielpeckssss.github.io/hebraico/" target="_blank" class="btn-cta" style="font-size:17px;padding:20px 52px;">
+      ✦ Acessar o Curso Agora
+    </a>
+    <div class="cta-guarantee">
+      <span>✓</span> Acesso imediato &nbsp;·&nbsp;
+      <span>✓</span> 29 módulos completos &nbsp;·&nbsp;
+      <span>✓</span> 100% interativo
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 <strong>Prof. Gabriel Barbosa</strong> · Curso de Hebraico Bíblico · עברית בִּיבְלִית
+  <br><br>
+  <a href="https://gabrielpeckssss.github.io/hebraico/" target="_blank" style="color:var(--gold);text-decoration:none;">gabrielpeckssss.github.io/hebraico</a>
+</footer>
+
+<!-- STICKY MOBILE CTA -->
+<div class="sticky-cta" id="stickyCta">
+  <div>
+    <div class="sticky-label">Acesso completo</div>
+    <div class="sticky-price">Hebraico Bíblico</div>
+  </div>
+  <a href="https://gabrielpeckssss.github.io/hebraico/" target="_blank" class="btn-cta" style="padding:12px 24px;font-size:14px;white-space:nowrap;">Acessar ✦</a>
+</div>
+
+<script>
+/* ── MÓDULOS DATA ── */
+const modulos=[
+  {n:'01',t:'O Alfabeto Hebraico',p:'22 letras com nome, som e valor numérico. Clique para ouvir cada letra.',badge:'Fundação'},
+  {n:'02',t:'Frases Essenciais',p:'Shalom, Todá, Bevakashá e mais — com pronúncia interativa.',badge:'Conversação'},
+  {n:'03',t:'Números de 1 a 10',p:'Contagem em hebraico bíblico com transliteração.',badge:'Vocabulário'},
+  {n:'04',t:'Artigos Definidos e Indefinidos',p:'O prefixo הַ (ha) e suas variações com guturais.',badge:'Gramática'},
+  {n:'05',t:'A Raiz Trilíteral',p:'O segredo do hebraico: como uma raiz de 3 letras gera dezenas de palavras.',badge:'Essencial'},
+  {n:'06',t:'Prefixos e Sufixos',p:'בְּ, לְ, כְּ, מִ e todos os sufixos pronominais com exemplos bíblicos.',badge:'Gramática'},
+  {n:'07',t:'Terminações Nominais e Verbais',p:'Gênero, número e estado construto (Semikhut).',badge:'Gramática'},
+  {n:'08',t:'Exegese de Gênesis 1:1',p:'Análise palavra por palavra do verso inaugural da Bíblia.',badge:'Exegese ⭐'},
+  {n:'09',t:'Plano de Treino Semanal',p:'Método diário para fixar o hebraico em 15–30 min/dia.',badge:'Método'},
+  {n:'10',t:'Sistema de Vogais — Nikud',p:'Os 12 sinais vocálicos massoréticos com som e exemplo.',badge:'Avançado'},
+  {n:'11',t:'Pronomes Pessoais',p:'Todas as formas com gênero e número — tabela interativa.',badge:'Gramática'},
+  {n:'12',t:'Os 7 Binyanim',p:'Os sete padrões verbais do hebraico: Qal, Nifal, Piel, Pual, Hitpael, Hifil, Hofal.',badge:'Essencial ⭐'},
+  {n:'13',t:'Ordem das Palavras — Sintaxe',p:'VSO vs SVO: como o hebraico organiza a frase narrativa.',badge:'Gramática'},
+  {n:'14',t:'Vav Consecutivo',p:'O elemento que define toda narrativa bíblica hebraica.',badge:'Essencial ⭐'},
+  {n:'15',t:'Cantilação — Teamim',p:'Os acentos musicais massoréticos e sua função sintática.',badge:'Avançado'},
+  {n:'16',t:'Exercício de Parsing Verbal',p:'Identifique raiz, binyan, tempo, pessoa e gênero de formas verbais bíblicas.',badge:'Interativo 🎯'},
+  {n:'17',t:'Glossário Interativo',p:'50 palavras mais frequentes da Bíblia com busca em tempo real.',badge:'Vocabulário'},
+  {n:'18',t:'História da Língua Hebraica',p:'3.000 anos em uma linha do tempo: do hebraico arcaico ao moderno.',badge:'Cultura'},
+  {n:'19',t:'Comparador Hebraico · Grego · Português',p:'Gn 1:1, Sl 23 e Is 7:14 nas três línguas com notas de tradução.',badge:'Crítica Textual'},
+  {n:'20',t:'Verbos Fracos e Irregulares',p:'Guturais, Pê-Nun, Lamed-He, Ayin-Vav e Pê-Alef.',badge:'Avançado'},
+  {n:'21',t:'Gênero, Número e Concordância',p:'Como substantivos, adjetivos e verbos devem concordar.',badge:'Gramática'},
+  {n:'22',t:'Partículas de Negação',p:'לֹא, אַל, אֵין, בַּל e mais — cada uma com uso específico.',badge:'Gramática'},
+  {n:'23',t:'Mais Exegese — Shema, Gn 1:2, Sl 1',p:'Análise profunda de três textos fundamentais da Bíblia.',badge:'Exegese ⭐'},
+  {n:'24',t:'Significado dos Nomes Bíblicos',p:'Moisés, Davi, Israel, Abraão — o que cada nome revela.',badge:'Cultura'},
+  {n:'25',t:'Manuscritos e Transmissão Textual',p:'Do Mar Morto ao Texto Massorético: como a Bíblia chegou até nós.',badge:'Acadêmico'},
+  {n:'26',t:'Versículo do Dia',p:'Um texto hebraico diferente a cada visita para manutenção diária.',badge:'Prática'},
+  {n:'27',t:'Leitura Cronometrada',p:'Meça sua velocidade de leitura e acompanhe sua evolução.',badge:'Interativo 🎯'},
+  {n:'28',t:'Mapa da Língua',p:'Os lugares onde o hebraico floresceu em cada período histórico.',badge:'Cultura'},
+  {n:'29',t:'Conquistas e XP',p:'Sistema de gamificação para manter a motivação ao longo do curso.',badge:'Gamificação 🏆'},
+];
+const mg=document.getElementById('modulosGrid');
+modulos.forEach((m,i)=>{
+  const c=document.createElement('div');c.className='mod-card reveal';
+  if(i%3===0)c.classList.add('reveal-delay-1');
+  else if(i%3===1)c.classList.add('reveal-delay-2');
+  else c.classList.add('reveal-delay-3');
+  c.innerHTML=`<div class="mod-num">${m.n}</div><div class="mod-body"><div class="mod-t">${m.t}</div><div class="mod-p">${m.p}</div><span class="mod-badge">${m.badge}</span></div>`;
+  mg.appendChild(c);
+});
+
+/* ── APRENDER DATA ── */
+const aprender=[
+  'Ler e pronunciar o alfabeto hebraico completo com confiança',
+  'Reconhecer os nikud (vogais massoréticas) e o Daghesh',
+  'Identificar raízes triconsonantais e deduzir significados',
+  'Compreender os 7 binyanim e suas funções verbais',
+  'Analisar a ordem VSO das narrativas bíblicas',
+  'Entender o Vav Consecutivo e ler narrativas em hebraico',
+  'Fazer parsing verbal completo (raiz, binyan, tempo, pessoa)',
+  'Ler e analisar Gênesis 1:1, o Shema Israel e o Salmo 23',
+  'Comparar o TM, a Septuaginta e traduções em português',
+  'Conhecer os principais manuscritos da Bíblia Hebraica',
+  'Dominar as 50 palavras mais frequentes da Bíblia',
+  'Entender o significado dos nomes próprios bíblicos',
+];
+const ag=document.getElementById('aprenderGrid');
+aprender.forEach((a,i)=>{
+  const d=document.createElement('div');d.className='ap-item reveal';
+  if(i%2===1)d.classList.add('reveal-delay-1');
+  d.innerHTML=`<div class="ap-check">✓</div><div class="ap-text">${a}</div>`;
+  ag.appendChild(d);
+});
+
+/* ── DEPOIMENTOS DATA ── */
+const deps=[
+  {text:'Finalmente encontrei um curso que não me faz sentir burro. O método do Prof. Gabriel é progressivo e intuitivo — em duas semanas já consigo reconhecer as letras e algumas palavras em Gênesis.',name:'Marcos T.',loc:'Pastor, Belo Horizonte',stars:'★★★★★'},
+  {text:'Incrível como algo tão complexo ficou tão acessível. A parte dos binyanim me abriu os olhos para como o hebraico funciona de forma completamente diferente do português.',name:'Beatriz F.',loc:'Estudante de Teologia, São Paulo',stars:'★★★★★'},
+  {text:'Uso o curso como material de estudo pessoal antes das prédicas. A exegese de Gênesis 1:1 palavra por palavra mudou a forma como eu prego esse texto.',name:'Rev. Carlos M.',loc:'Pastor, Porto Alegre',stars:'★★★★★'},
+  {text:'O glossário interativo com busca é genial. Toda vez que encontro uma palavra desconhecida no texto original, vou direto lá. Ferramenta essencial.',name:'Lara S.',loc:'Professora de Escola Dominical',stars:'★★★★★'},
+  {text:'Já tentei outros materiais de hebraico e desisti. Aqui o design moderno e os exercícios interativos fazem diferença real na retenção do conteúdo.',name:'André P.',loc:'Seminarista, Campinas',stars:'★★★★★'},
+  {text:'O comparador entre hebraico, grego e português em Isaías 7:14 resolveu dúvidas que eu tinha há anos sobre tradução. Profundo e honesto academicamente.',name:'Dra. Fernanda K.',loc:'Professora de Teologia',stars:'★★★★★'},
+];
+const dg=document.getElementById('depGrid');
+deps.forEach((d,i)=>{
+  const c=document.createElement('div');c.className='dep-card reveal';
+  if(i%2===1)c.classList.add('reveal-delay-1');
+  c.innerHTML=`<div class="dep-quote">"</div><div class="dep-stars">${d.stars}</div><div class="dep-text">${d.text}</div><div class="dep-author"><div class="dep-av">👤</div><div><div class="dep-name">${d.name}</div><div class="dep-loc">${d.loc}</div></div></div>`;
+  dg.appendChild(c);
+});
+
+/* ── PREÇO ── */
+const precos=[
+  {nome:'Acesso Completo',valor:'R$ 97',periodo:'pagamento único',badge:null,items:['29 módulos interativos','Exegese palavra por palavra','Glossário de 50 palavras','Quiz e exercício de parsing','Leitura cronometrada','Sistema de conquistas XP','Atualizações futuras incluídas','Acesso vitalício'],destaque:false},
+  {nome:'Acesso Premium',valor:'R$ 147',periodo:'pagamento único',badge:'Mais popular ✦',items:['Tudo do Acesso Completo','Material de apoio em PDF','Suporte direto com o Prof. Gabriel','Grupo exclusivo de alunos','Novas lições em primeira mão','Acesso vitalício'],destaque:true},
+];
+const pw=document.getElementById('precoWrap');
+precos.forEach(p=>{
+  const c=document.createElement('div');c.className='preco-card reveal'+(p.destaque?' destaque':'');
+  c.innerHTML=`${p.badge?`<div class="preco-badge-top">${p.badge}</div>`:''}
+    <div class="preco-nome">${p.nome}</div>
+    <div class="preco-valor">${p.valor}</div>
+    <div class="preco-periodo">${p.periodo}</div>
+    <ul class="preco-lista">${p.items.map(i=>`<li>${i}</li>`).join('')}</ul>
+    <a href="https://gabrielpeckssss.github.io/hebraico/" target="_blank" class="btn-cta" style="width:100%;display:block;text-align:center;padding:15px;">Quero este plano ✦</a>`;
+  pw.appendChild(c);
+});
+
+/* ── FAQ ── */
+const faqs=[
+  {q:'Preciso ter conhecimento prévio de hebraico?',a:'Não! O curso começa do zero absoluto — do primeiro contato com o alfabeto. Qualquer pessoa com vontade de aprender consegue acompanhar.'},
+  {q:'O curso é em vídeo ou texto?',a:'É um curso totalmente interativo em formato web — não são vídeos nem PDFs. Você lê, clica, ouve pronúncias, faz quizzes e exercícios dentro da própria página do curso.'},
+  {q:'Quanto tempo por dia preciso dedicar?',a:'O módulo de treino recomenda 15 a 30 minutos por dia. Com esse ritmo, em 4 semanas você já tem uma base sólida do hebraico bíblico.'},
+  {q:'O hebraico deste curso é o bíblico ou o moderno?',a:'O foco é o Hebraico Bíblico — a língua do Antigo Testamento. Há comparações com o hebraico moderno, mas o objetivo central é a leitura e exegese das Escrituras.'},
+  {q:'Vou conseguir ler a Bíblia em hebraico depois do curso?',a:'Você vai desenvolver a base necessária para começar a ler com o apoio de ferramentas (como o interlinear). A fluência total exige anos de prática, mas a Lição 1 é o alicerce sólido dessa jornada.'},
+  {q:'O acesso é vitalício?',a:'Sim. Depois de adquirir, você tem acesso ao curso para sempre — incluindo todas as atualizações e novos módulos que forem adicionados.'},
+  {q:'Como funciona o acesso após a compra?',a:'Após a confirmação do pagamento, você recebe o link do curso por e-mail. O acesso é imediato — sem espera, sem instalação.'},
+];
+const fl=document.getElementById('faqList');
+faqs.forEach(f=>{
+  const d=document.createElement('div');d.className='faq-item reveal';
+  d.innerHTML=`<div class="faq-q" onclick="toggleFaq(this)">${f.q}<span class="faq-arrow">+</span></div><div class="faq-a">${f.a}</div>`;
+  fl.appendChild(d);
+});
+function toggleFaq(el){const item=el.parentElement;item.classList.toggle('open');}
+
+/* ── SCROLL REVEAL ── */
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.07,rootMargin:'0px 0px -30px 0px'});
+setTimeout(()=>{document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));},200);
+
+/* ── STICKY CTA ── */
+window.addEventListener('scroll',()=>{
+  const sc=document.getElementById('stickyCta');
+  if(window.scrollY>600)sc.classList.add('show');
+  else sc.classList.remove('show');
+});
+</script>
+</body>
+</html>
